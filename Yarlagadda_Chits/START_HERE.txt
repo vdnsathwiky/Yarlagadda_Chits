@@ -1,0 +1,51 @@
+YARLAGADDA CHITS — TESTING BUILD QUICK START (WINDOWS POWERSHELL)
+
+IMPORTANT DATA SAFETY
+---------------------
+This build uses the database name yarlagadda_chits_test by default. It does not delete or modify another database. Keep backend/.env private and do not upload it to GitHub.
+
+1) Extract this ZIP and open the extracted Yarlagadda_Chits_Final folder in VS Code.
+2) In VS Code, open backend/.env.example, copy it to backend/.env.
+3) In backend/.env, replace the MongoDB username, password and exact Atlas cluster host with the URI copied from Atlas > Connect > Drivers. Keep MONGO_DB_NAME=yarlagadda_chits_test for isolated testing. Use a long random JWT_SECRET_KEY.
+4) In Atlas > Network Access, allow your current public IP address.
+
+BACKEND TERMINAL (PowerShell)
+-----------------------------
+cd backend
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python app.py
+
+Keep this terminal running. Flask runs at http://127.0.0.1:5000.
+Check database connectivity at http://127.0.0.1:5000/api/health. It should return status=ok and database=connected.
+
+FRONTEND TERMINAL (open a second PowerShell terminal)
+-----------------------------------------------------
+cd frontend
+npm install
+npm run dev
+
+Open http://localhost:5173.
+
+FIRST TEST FLOW
+---------------
+1) Register a new test account.
+2) Create the ₹1 lakh / 10-month preset and choose a test start date.
+3) Add members. Confirm the same member count appears on Overview, My chit schemes and Chit details.
+4) Record a payment for a member. Example: ₹7,500 against ₹7,710 leaves ₹210 due for that member when the instalment is due.
+5) Confirm collected amounts match on the scheme card and details page.
+6) Test the other three presets.
+7) Enter the external lottery result only after adding exactly one member per month; every member must be assigned exactly once.
+
+SCHEDULE RULES
+--------------
+- Preset monthly premiums use the embedded schedule data, not chit_value/duration.
+- Total collected is the sum of actual recorded payments.
+- Outstanding dues are calculated only through instalments due on or before today, including carried balances.
+- Later scheduled premiums are shown separately and are not treated as current dues.
+- Months with due dates before today appear in History; payment entry is blocked for those months.
+- The website records externally drawn allotments; it does not generate random winners.
+
+This is a local testing build. Confirm it against your own test database before relying on it for real collections.

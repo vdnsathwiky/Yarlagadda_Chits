@@ -1,0 +1,21 @@
+YARLAGADDA CHITS — TESTING BUILD CHANGES
+
+- Fixed chit serialization so it no longer mutates MongoDB ObjectIds before payment-ledger lookups. This was a concrete cause of collection totals differing between the scheme list and detail page.
+- Normalised embedded member records and returned a single member_count field for list, dashboard and detail responses.
+- Outstanding dues now stop at the latest instalment due on or before today. Future instalments are excluded from current dues.
+- Added separate figures for month-one expected collection at full member capacity and scheduled premiums for months 2 onward for enrolled members.
+- Kept actual recorded payments separate from expected collection and future schedule values.
+- Added JWT error responses that return 401 with a readable message; frontend clears an invalid/expired session before redirecting to login.
+- Added MONGO_DB_NAME configuration; this package defaults to yarlagadda_chits_test to isolate testing data.
+- Updated Windows PowerShell setup instructions.
+
+VALIDATION
+- backend/app.py passed Python syntax compilation (py_compile).
+- Frontend npm dependencies could not be installed in the build environment due to package-registry timeout, so a production Vite build was not verified here.
+- Atlas connectivity and real-data behavior must be tested with the user's own backend/.env and Atlas Network Access configuration.
+
+16 Nov 2026 - Current due and customer collection amount
+- Current outstanding now includes the first scheduled instalment before its due date, so advance/partial month-one payments immediately show the unpaid remainder.
+- After the schedule begins, current outstanding is the balance through the latest instalment due on or before today, including carried arrears.
+- Each member row now shows current unpaid balance, next instalment remaining, and a combined customer collection amount (current due + next instalment).
+- Scheme details include an aggregate suggested collection total across enrolled members.
