@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, NavLink, useNavigate, use
 import { LayoutDashboard, Wallet, Users, Plus, LogOut, Search, ArrowUpRight, IndianRupee, CalendarDays, CircleCheck, Clock3, Trash2, ChevronRight, Menu, X, Sparkles, ShieldCheck, ReceiptText, ArrowLeft, UserRound, Phone, TrendingUp } from 'lucide-react';
 import './style.css';
 
-const API = 'http://127.0.0.1:5000/api';
+const API = 'https://yarlagadda-chits-1.onrender.com/api';
 const AuthContext = createContext(null);
 const useAuth = () => useContext(AuthContext);
 const money = n => '₹' + Number(n || 0).toLocaleString('en-IN', {maximumFractionDigits: 2});
